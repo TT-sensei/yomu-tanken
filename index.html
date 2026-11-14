@@ -48,10 +48,12 @@
   /* passage */
   .passage-card{background:var(--card);border-radius:20px;padding:22px 26px;box-shadow:0 4px 16px rgba(46,139,116,.09);}
   .passage-title{font-size:24px;font-weight:900;margin:0 0 14px;color:var(--primary-dark);}
-  .passage{line-height:1.9;}
+  .passage{line-height:1.9;writing-mode:vertical-rl;}
+  #screen-read .passage{height:480px;width:fit-content;max-width:100%;margin:0 auto;overflow-x:auto;}
+  #screen-quiz .passage{height:556px;width:fit-content;max-width:100%;margin:0 auto;overflow-x:auto;}
   .g1 .passage{font-size:24px;}
   .g2 .passage{font-size:23px;}
-  .sent{display:block;padding:2px 8px;border-radius:10px;margin-bottom:4px;}
+  .sent{display:block;padding:6px 3px;border-radius:10px;margin-left:4px;}
   .sent rt{font-size:.5em;color:#7a8d86;}
   body.furigana-off .sent rt, body.furigana-off .q-text rt, body.furigana-off .choice-btn rt{display:none;}
   .sent.tap{cursor:pointer;border:2px dashed transparent;}
