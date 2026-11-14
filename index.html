@@ -25,22 +25,22 @@
   /* home */
   .hero{display:flex;gap:20px;background:var(--card);border-radius:22px;padding:12px 22px;box-shadow:0 4px 18px rgba(46,139,116,.10);align-items:center;}
   .hero-text{flex:1;}
-  .hero-text h1{margin:0 0 8px;font-size:30px;color:var(--primary-dark);}
-  .hero-text p{margin:0;font-size:17px;line-height:1.7;color:#47635a;}
-  .hero img{width:250px;max-width:42%;border-radius:16px;display:block;}
+  .hero-text h1{margin:0 0 6px;font-size:26px;color:var(--primary-dark);}
+  .hero-text p{margin:0;font-size:15.5px;line-height:1.55;color:#47635a;}
+  .hero img{width:182px;max-width:42%;border-radius:16px;display:block;}
   .grade-tabs{display:flex;gap:12px;margin:12px 0 10px;}
-  .grade-tab{flex:1;border:3px solid var(--line);background:#fff;border-radius:16px;padding:14px;font-size:22px;font-weight:900;cursor:pointer;font-family:inherit;color:var(--ink);}
+  .grade-tab{flex:1;border:3px solid var(--line);background:#fff;border-radius:16px;padding:10px;font-size:22px;font-weight:900;cursor:pointer;font-family:inherit;color:var(--ink);}
   .grade-tab.on{border-color:var(--primary);background:var(--soft);color:var(--primary-dark);}
-  .text-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-  .text-card{background:var(--card);border-radius:18px;padding:13px 16px;box-shadow:0 3px 12px rgba(46,139,116,.08);border:2px solid transparent;text-align:left;cursor:pointer;font-family:inherit;width:100%;}
+  .text-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .text-card{background:var(--card);border-radius:18px;padding:10px 14px;box-shadow:0 3px 12px rgba(46,139,116,.08);border:2px solid transparent;text-align:left;cursor:pointer;font-family:inherit;width:100%;}
   .text-card:hover{border-color:var(--primary);}
-  .kind-badge{display:inline-block;font-size:13px;font-weight:900;padding:3px 10px;border-radius:999px;background:#fdeed3;color:#9a6a12;margin-bottom:8px;}
+  .kind-badge{display:inline-block;font-size:13px;font-weight:900;padding:2px 10px;border-radius:999px;background:#fdeed3;color:#9a6a12;margin-bottom:5px;}
   .kind-badge.setsu{background:#e2ecfb;color:#33598c;}
-  .text-card h3{margin:0 0 6px;font-size:21px;color:var(--ink);}
+  .text-card h3{margin:0 0 4px;font-size:19px;color:var(--ink);}
   .text-card .meta{font-size:14px;color:#6b7f78;font-weight:700;}
-  .text-card .stars{font-size:16px;color:var(--accent);margin-top:4px;min-height:20px;}
-  .home-actions{display:flex;gap:14px;margin-top:16px;}
-  .action-card{flex:1;background:var(--card);border-radius:18px;padding:16px 18px;box-shadow:0 3px 12px rgba(46,139,116,.08);display:flex;align-items:center;gap:14px;cursor:pointer;border:2px solid transparent;font-family:inherit;text-align:left;}
+  .text-card .stars{font-size:15px;color:var(--accent);margin-top:2px;min-height:18px;}
+  .home-actions{display:flex;gap:14px;margin-top:12px;}
+  .action-card{flex:1;background:var(--card);border-radius:18px;padding:12px 18px;box-shadow:0 3px 12px rgba(46,139,116,.08);display:flex;align-items:center;gap:14px;cursor:pointer;border:2px solid transparent;font-family:inherit;text-align:left;}
   .action-card:hover{border-color:var(--primary);}
   .action-card h4{margin:0;font-size:19px;}
   .action-card p{margin:2px 0 0;font-size:14px;color:#6b7f78;font-weight:700;}
@@ -98,10 +98,10 @@
   .rec-table td,.rec-table th{border-bottom:2px solid var(--soft);padding:10px 8px;text-align:left;}
   .back-link{background:none;border:none;color:var(--primary-dark);font-size:17px;font-weight:900;cursor:pointer;font-family:inherit;padding:6px 0;}
   .passage-card{position:relative;}
-  #tap-hand{position:absolute;top:70px;right:16px;font-size:46px;display:none;z-index:6;pointer-events:none;filter:drop-shadow(0 3px 3px rgba(0,0,0,.25));}
-  #tap-hand.show{display:block;animation:handBob .9s ease-in-out infinite;}
-  @keyframes handBob{0%,100%{transform:translateY(0) rotate(-10deg);}50%{transform:translateY(-14px) rotate(-10deg);}}
-  .sent.tap{animation:sentPulse 1.6s ease-in-out infinite;}
+  #tap-hand{position:absolute;top:50%;left:50%;font-size:110px;display:none;z-index:6;pointer-events:none;filter:drop-shadow(0 4px 6px rgba(0,0,0,.3));}
+  #tap-hand.show{display:block;animation:handPrompt 2.2s ease forwards;}
+  @keyframes handPrompt{0%{opacity:0;transform:translate(-50%,-40%) rotate(-8deg);}18%{opacity:1;transform:translate(-50%,-58%) rotate(-8deg);}38%{transform:translate(-50%,-42%) rotate(-8deg);}58%{transform:translate(-50%,-58%) rotate(-8deg);}78%{opacity:1;transform:translate(-50%,-50%) rotate(-8deg);}100%{opacity:0;transform:translate(-50%,-50%) rotate(-8deg);}}
+  .sent.tap{animation:sentPulse .7s ease-in-out 3;}
   @keyframes sentPulse{0%,100%{background:#ffffff;}50%{background:#e9f7f0;}}
   @media (max-width: 900px) {
     .text-grid{grid-template-columns:1fr;}
@@ -480,6 +480,109 @@ TEXTS.push(
         explain: "「すがたが 大《おお》きく 変《か》わります」と あります。" },
       { q: "オタマジャクシに あって、大《おお》きく なると 消《き》えるものは、なんですか。", choices: ["しっぽ", "あし", "目《め》"], answer: "しっぽ", evidence: 3,
         explain: "「しっぽが 消《き》えます」と あります。" }
+    ]
+  }
+);
+
+
+/* ================= 追加の文（第2弾） ================= */
+TEXTS.push(
+  {
+    id: "g1-t6", grade: 1, kind: "ものがたり", title: "ころんだ ひよこ",
+    sentences: [
+      "ある ひ、ひよこの ぴよは、おかあさんと さんぽに でかけました。",
+      "ぴよは、小さな いしに つまずいて、ころんで しまいました。",
+      "おかあさんは、「だいじょうぶ？」と ききました。",
+      "ぴよは、ないて しまいましたが、すぐに たちあがりました。",
+      "おかあさんは、「がんばったね。」と ほめて くれました。",
+      "ぴよは、にっこり わらって、また あるきだしました。"
+    ],
+    questions: [
+      { q: "さんぽに でかけたのは、だれと だれですか。", choices: ["ぴよと おかあさん", "ぴよと おとうさん", "ぴよと おねえさん"], answer: "ぴよと おかあさん", evidence: 0,
+        explain: "「ぴよは、おかあさんと さんぽに でかけました」と あります。" },
+      { q: "ぴよは、どうして ころびましたか。", choices: ["いしに つまずいたから", "あなが あったから", "かぜが ふいたから"], answer: "いしに つまずいたから", evidence: 1,
+        explain: "「小さな いしに つまずいて、ころんで しまいました」と あります。" },
+      { q: "おかあさんは、ぴよに なんと ききましたか。", choices: ["だいじょうぶ？", "いたい？", "つかれた？"], answer: "だいじょうぶ？", evidence: 2,
+        explain: "おかあさんは「だいじょうぶ？」と ききました。" },
+      { q: "ぴよは、ころんだあと、どうしましたか。", choices: ["すぐに たちあがった", "ずっと ないていた", "ねて しまった"], answer: "すぐに たちあがった", evidence: 3,
+        explain: "「すぐに たちあがりました」と あります。" },
+      { q: "おかあさんは、ぴよを どうしましたか。", choices: ["ほめた", "しかった", "だっこした"], answer: "ほめた", evidence: 4,
+        explain: "「ほめて くれました」と あります。" },
+      { q: "さいごに、ぴよは どうしましたか。", choices: ["わらって あるきだした", "おうちへ かえった", "ないて しまった"], answer: "わらって あるきだした", evidence: 5,
+        explain: "「にっこり わらって、また あるきだしました」と あります。" }
+    ]
+  },
+  {
+    id: "g1-t7", grade: 1, kind: "せつめい", title: "あり",
+    sentences: [
+      "ありは、小さな むしです。",
+      "ありは、みんなで なかよく くらしています。",
+      "たべものを みつけると、なかまを よんで、いっしょに はこびます。",
+      "ありの すは、つちの なかに あります。",
+      "ありは、じぶんの からだより 大きな ものも はこべます。"
+    ],
+    questions: [
+      { q: "ありは、どんな むしですか。", choices: ["小さな むし", "大きな むし", "速い むし"], answer: "小さな むし", evidence: 0,
+        explain: "「ありは、小さな むしです」と あります。" },
+      { q: "ありは、どう くらしていますか。", choices: ["みんなで なかよく", "ひとりぼっちで", "いつも けんかして"], answer: "みんなで なかよく", evidence: 1,
+        explain: "「みんなで なかよく くらしています」と あります。" },
+      { q: "ありは、たべものを みつけると、どうしますか。", choices: ["なかまを よんで はこぶ", "すぐに たべる", "かくして しまう"], answer: "なかまを よんで はこぶ", evidence: 2,
+        explain: "「なかまを よんで、いっしょに はこびます」と あります。" },
+      { q: "ありの すは、どこに ありますか。", choices: ["つちの なか", "きの うえ", "みずの なか"], answer: "つちの なか", evidence: 3,
+        explain: "「ありの すは、つちの なかに あります」と あります。" },
+      { q: "ありは、どんな ものも はこべますか。", choices: ["からだより 大きな もの", "まるい もの", "ながい もの"], answer: "からだより 大きな もの", evidence: 4,
+        explain: "「からだより 大きな ものも はこべます」と あります。" },
+      { q: "ありは、なんの なかまですか。", choices: ["むし", "とり", "さかな"], answer: "むし", evidence: 0,
+        explain: "「小さな むしです」と あります。" }
+    ]
+  },
+  {
+    id: "g2-t6", grade: 2, kind: "ものがたり", title: "タンポポの わたげ",
+    sentences: [
+      "はるの 日《ひ》、たかしは 道《みち》ばたで タンポポの わたげを 見《み》つけました。",
+      "たかしが ふっと 息《いき》を 吹《ふ》きかけると、わたげは ふわりと 空《そら》へ 舞《ま》い上《あ》がりました。",
+      "わたげは、風《かぜ》に 乗《の》って、野原《のはら》を こえて 飛《と》んで 行《い》きました。",
+      "わたげの 一《ひと》つ 一《ひと》つには、小《ちい》さな 種《たね》が ついています。",
+      "種《たね》が 落《お》ちた ところでは、来年《らいねん》、また タンポポが 咲《さ》くでしょう。",
+      "たかしは、「来年《らいねん》も たくさん 咲《さ》くといいな。」と 思《おも》いました。"
+    ],
+    questions: [
+      { q: "たかしが 見《み》つけたのは、なんですか。", choices: ["タンポポの わたげ", "桜《さくら》の 花《はな》びら", "ちょうちょ"], answer: "タンポポの わたげ", evidence: 0,
+        explain: "「タンポポの わたげを 見《み》つけました」と あります。" },
+      { q: "わたげは、どうして 空《そら》へ 舞《ま》い上《あ》がりましたか。", choices: ["たかしが 息《いき》を 吹《ふ》きかけたから", "雨《あめ》が 降《ふ》ったから", "鳥《とり》が 来《き》たから"], answer: "たかしが 息《いき》を 吹《ふ》きかけたから", evidence: 1,
+        explain: "「たかしが ふっと 息《いき》を 吹《ふ》きかけると」と あります。" },
+      { q: "わたげは、なにに 乗《の》って 飛《と》びましたか。", choices: ["風《かぜ》", "雲《くも》", "川《かわ》"], answer: "風《かぜ》", evidence: 2,
+        explain: "「風《かぜ》に 乗《の》って」と あります。" },
+      { q: "わたげには、なにが ついていますか。", choices: ["小《ちい》さな 種《たね》", "小《ちい》さな 葉《は》", "小《ちい》さな 実《み》"], answer: "小《ちい》さな 種《たね》", evidence: 3,
+        explain: "「小《ちい》さな 種《たね》が ついています」と あります。" },
+      { q: "種《たね》が 落《お》ちた ところでは、どう なりますか。", choices: ["来年《らいねん》、タンポポが 咲《さ》く", "すぐに 木《き》が 育《そだ》つ", "花《はな》は 咲《さ》かない"], answer: "来年《らいねん》、タンポポが 咲《さ》く", evidence: 4,
+        explain: "「来年《らいねん》、また タンポポが 咲《さ》くでしょう」と あります。" },
+      { q: "たかしは、どんなことを 思《おも》いましたか。", choices: ["来年《らいねん》も たくさん 咲《さ》くといい", "もっと 吹《ふ》きたい", "家《いえ》に 持《も》って 帰《かえ》りたい"], answer: "来年《らいねん》も たくさん 咲《さ》くといい", evidence: 5,
+        explain: "「『来年《らいねん》も たくさん 咲《さ》くといいな。』と 思《おも》いました」と あります。" }
+    ]
+  },
+  {
+    id: "g2-t7", grade: 2, kind: "せつめい", title: "ミツバチ",
+    sentences: [
+      "ミツバチは、花《はな》の みつを 集《あつ》める 虫《むし》です。",
+      "一匹《いっぴき》の 女王《じょおう》バチを 中心《ちゅうしん》に、たくさんの 仲間《なかま》で くらしています。",
+      "ミツバチは、花《はな》から 花《はな》へ 飛《と》び回《まわ》って、みつや 花粉《かふん》を 集《あつ》めます。",
+      "集《あつ》めた みつは、巣《す》の 中《なか》に ためられ、はちみつに なります。",
+      "ミツバチが 花粉《かふん》を 運《はこ》ぶ おかげで、花《はな》は 実《み》を つけることが できます。"
+    ],
+    questions: [
+      { q: "ミツバチは、なにを 集《あつ》める 虫《むし》ですか。", choices: ["花《はな》の みつ", "木《き》の 葉《は》", "水《みず》"], answer: "花《はな》の みつ", evidence: 0,
+        explain: "「花《はな》の みつを 集《あつ》める 虫《むし》です」と あります。" },
+      { q: "ミツバチの 巣《す》の 中心《ちゅうしん》に いるのは、だれですか。", choices: ["女王《じょおう》バチ", "お父《とう》さんバチ", "子《こ》どもバチ"], answer: "女王《じょおう》バチ", evidence: 1,
+        explain: "「一匹《いっぴき》の 女王《じょおう》バチを 中心《ちゅうしん》に」と あります。" },
+      { q: "ミツバチは、花《はな》で なにを 集《あつ》めますか。", choices: ["みつや 花粉《かふん》", "露《つゆ》", "種《たね》"], answer: "みつや 花粉《かふん》", evidence: 2,
+        explain: "「みつや 花粉《かふん》を 集《あつ》めます」と あります。" },
+      { q: "集《あつ》めた みつは、なにに なりますか。", choices: ["はちみつ", "ジャム", "シロップ"], answer: "はちみつ", evidence: 3,
+        explain: "「はちみつに なります」と あります。" },
+      { q: "ミツバチが 花粉《かふん》を 運《はこ》ぶと、花《はな》は どう なりますか。", choices: ["実《み》を つけられる", "大《おお》きく なる", "色《いろ》が 変《か》わる"], answer: "実《み》を つけられる", evidence: 4,
+        explain: "「花《はな》は 実《み》を つけることが できます」と あります。" },
+      { q: "ミツバチは、どう くらしていますか。", choices: ["たくさんの 仲間《なかま》で", "一匹《いっぴき》で", "二匹《にひき》で"], answer: "たくさんの 仲間《なかま》で", evidence: 1,
+        explain: "「たくさんの 仲間《なかま》で くらしています」と あります。" }
     ]
   }
 );
