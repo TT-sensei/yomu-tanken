@@ -46,6 +46,8 @@ for t in data:
         total_questions += 1
         if not isinstance(q.get("q"), str) or not q["q"].strip():
             errors.append(f"{tid} 問題{i}: q がありません")
+        elif re.search(r"[一-龯々]", q["q"]):
+            errors.append(f"{tid} 問題{i}: 問いはひらがな・カタカナを中心にし、漢字を使わないでください")
         if not isinstance(q.get("explain"), str) or not q["explain"].strip():
             errors.append(f"{tid} 問題{i}: explain がありません")
 
