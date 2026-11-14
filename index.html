@@ -19,26 +19,26 @@
   .head-spacer{flex:1;}
   .toggle-btn{border:2px solid var(--line);background:#fff;border-radius:999px;padding:8px 16px;font-size:15px;font-weight:800;color:var(--ink);cursor:pointer;font-family:inherit;}
   .toggle-btn.on{background:var(--soft);border-color:var(--primary);color:var(--primary-dark);}
-  main{max-width:1180px;margin:0 auto;padding:16px 20px 28px;}
+  main{max-width:1180px;margin:0 auto;padding:14px 20px 16px;}
   .screen{display:none;}
   .screen.active{display:block;}
   /* home */
-  .hero{display:flex;gap:20px;background:var(--card);border-radius:22px;padding:18px 22px;box-shadow:0 4px 18px rgba(46,139,116,.10);align-items:center;}
+  .hero{display:flex;gap:20px;background:var(--card);border-radius:22px;padding:12px 22px;box-shadow:0 4px 18px rgba(46,139,116,.10);align-items:center;}
   .hero-text{flex:1;}
   .hero-text h1{margin:0 0 8px;font-size:30px;color:var(--primary-dark);}
   .hero-text p{margin:0;font-size:17px;line-height:1.7;color:#47635a;}
-  .hero img{width:340px;max-width:42%;border-radius:16px;display:block;}
-  .grade-tabs{display:flex;gap:12px;margin:18px 0 14px;}
+  .hero img{width:250px;max-width:42%;border-radius:16px;display:block;}
+  .grade-tabs{display:flex;gap:12px;margin:12px 0 10px;}
   .grade-tab{flex:1;border:3px solid var(--line);background:#fff;border-radius:16px;padding:14px;font-size:22px;font-weight:900;cursor:pointer;font-family:inherit;color:var(--ink);}
   .grade-tab.on{border-color:var(--primary);background:var(--soft);color:var(--primary-dark);}
   .text-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-  .text-card{background:var(--card);border-radius:18px;padding:18px;box-shadow:0 3px 12px rgba(46,139,116,.08);border:2px solid transparent;text-align:left;cursor:pointer;font-family:inherit;width:100%;}
+  .text-card{background:var(--card);border-radius:18px;padding:13px 16px;box-shadow:0 3px 12px rgba(46,139,116,.08);border:2px solid transparent;text-align:left;cursor:pointer;font-family:inherit;width:100%;}
   .text-card:hover{border-color:var(--primary);}
   .kind-badge{display:inline-block;font-size:13px;font-weight:900;padding:3px 10px;border-radius:999px;background:#fdeed3;color:#9a6a12;margin-bottom:8px;}
   .kind-badge.setsu{background:#e2ecfb;color:#33598c;}
   .text-card h3{margin:0 0 6px;font-size:21px;color:var(--ink);}
   .text-card .meta{font-size:14px;color:#6b7f78;font-weight:700;}
-  .text-card .stars{font-size:18px;color:var(--accent);margin-top:6px;min-height:24px;}
+  .text-card .stars{font-size:16px;color:var(--accent);margin-top:4px;min-height:20px;}
   .home-actions{display:flex;gap:14px;margin-top:16px;}
   .action-card{flex:1;background:var(--card);border-radius:18px;padding:16px 18px;box-shadow:0 3px 12px rgba(46,139,116,.08);display:flex;align-items:center;gap:14px;cursor:pointer;border:2px solid transparent;font-family:inherit;text-align:left;}
   .action-card:hover{border-color:var(--primary);}
@@ -97,7 +97,13 @@
   .rec-table{width:100%;border-collapse:collapse;font-size:17px;font-weight:700;}
   .rec-table td,.rec-table th{border-bottom:2px solid var(--soft);padding:10px 8px;text-align:left;}
   .back-link{background:none;border:none;color:var(--primary-dark);font-size:17px;font-weight:900;cursor:pointer;font-family:inherit;padding:6px 0;}
-  @media (max-width:900px){
+  .passage-card{position:relative;}
+  #tap-hand{position:absolute;top:70px;right:16px;font-size:46px;display:none;z-index:6;pointer-events:none;filter:drop-shadow(0 3px 3px rgba(0,0,0,.25));}
+  #tap-hand.show{display:block;animation:handBob .9s ease-in-out infinite;}
+  @keyframes handBob{0%,100%{transform:translateY(0) rotate(-10deg);}50%{transform:translateY(-14px) rotate(-10deg);}}
+  .sent.tap{animation:sentPulse 1.6s ease-in-out infinite;}
+  @keyframes sentPulse{0%,100%{background:#ffffff;}50%{background:#e9f7f0;}}
+  @media (max-width: 900px) {
     .text-grid{grid-template-columns:1fr;}
     .quiz-grid{grid-template-columns:1fr;}
     .hero{flex-direction:column;}
@@ -120,8 +126,8 @@
   <section class="screen active" id="screen-home">
     <div class="hero">
       <div class="hero-text">
-        <h1>文を よんで、根拠を さがそう</h1>
-        <p>お話や 説明の文を読んで、もんだいに答えます。答えたら、「どうしてそう思う？」の根拠になる文を、本文からタップで探します。答えと根拠の両方が合えば、読めた証拠です。</p>
+        <h1>文を よんで、答えの文を さがそう</h1>
+        <p>お話や 説明の文を読んで、もんだいに答えます。答えたら、答えが どこに書いてあるか、その文を 本文からタップで探します。答えと文の両方が合えば、読めた証拠です。</p>
       </div>
       <img src="https://tt-sensei.github.io/navi-character-/assets/groups/daily/pair-daily-reading-saku-tsuki.png" alt="本を読む さくと つき" />
     </div>
@@ -160,6 +166,7 @@
     <div class="quiz-grid">
       <div class="passage-card">
         <h2 class="passage-title" id="quiz-title"></h2>
+        <div id="tap-hand">👆</div>
         <div class="passage" id="quiz-passage"></div>
       </div>
       <div class="quiz-side">
@@ -170,7 +177,7 @@
         <div class="q-card">
           <div class="q-count" id="q-count"></div>
           <p class="q-text" id="q-text"></p>
-          <div class="phase-note" id="phase-note">こたえの 根拠は、どの文かな？　本文の文を タップしてね。</div>
+          <div class="phase-note" id="phase-note">答えは、どこに 書いてあるかな？　その文を タップしてね。</div>
           <div class="choices" id="choices"></div>
           <div class="explain-box row-gap" id="explain-box"></div>
           <div class="center row-gap">
@@ -333,6 +340,150 @@ const TEXTS = [
   }
 ];
 
+
+/* ================= 追加のもんだい・新しい文（育てる用） ================= */
+const EXTRA_Q = {
+  "g1-t1": [
+    { q: "ことりは、だれと はぐれて しまいましたか。", choices: ["おかあさん", "たろう", "かめ"], answer: "おかあさん", evidence: 2,
+      explain: "「おかあさんと はぐれて しまったのです」と あります。" },
+    { q: "たろうは、どこで ことりを みつけましたか。", choices: ["こうえん", "がっこう", "おうち"], answer: "こうえん", evidence: 0,
+      explain: "「こうえんで、ことりが ないて いました」と あります。" }
+  ],
+  "g1-t2": [
+    { q: "かめは、なんと いいましたか。", choices: ["あめは いやだなあ", "あめは たのしいなあ", "あめは つめたいなあ"], answer: "あめは いやだなあ", evidence: 2,
+      explain: "かめは「あめは いやだなあ」と いいました。" },
+    { q: "ぴょんたが だいすきなのは、なんですか。", choices: ["あめ", "ゆき", "かぜ"], answer: "あめ", evidence: 3,
+      explain: "ぴょんたは「ぼくは あめが だいすき」と いいました。" }
+  ],
+  "g1-t3": [
+    { q: "あさがおの はなの いろには、なにが ありますか。", choices: ["むらさきや ももいろ", "あかや しろ", "きいろや みどり"], answer: "むらさきや ももいろ", evidence: 3,
+      explain: "「いろは、むらさきや ももいろが あります」と あります。" },
+    { q: "あさがおの つるは、なにを しますか。", choices: ["ものに まきつく", "はなを とばす", "たねを かくす"], answer: "ものに まきつく", evidence: 1,
+      explain: "「ものに まきつきます」と あります。" }
+  ],
+  "g2-t1": [
+    { q: "さくらは、虹《にじ》を 見《み》て なんと 言《い》いましたか。", choices: ["わあ、きれい", "わあ、おおきい", "わあ、たかい"], answer: "わあ、きれい", evidence: 2,
+      explain: "「『わあ、きれい。』と さくらが 言《い》いました」と あります。" },
+    { q: "空《そら》を 見上《みあ》げたのは、だれと だれですか。", choices: ["さくらと ゆうき", "さくらと 先生《せんせい》", "ゆうきと りく"], answer: "さくらと ゆうき", evidence: 2,
+      explain: "さくらが 言《い》うと、ゆうきも 空《そら》を 見上《みあ》げました。" }
+  ],
+  "g2-t2": [
+    { q: "りくは、どこで ぬけがらを 見《み》つけましたか。", choices: ["校庭《こうてい》の 桜《さくら》の 木《き》", "公園《こうえん》の 松《まつ》の 木《き》", "山《やま》の 杉《すぎ》の 木《き》"], answer: "校庭《こうてい》の 桜《さくら》の 木《き》", evidence: 0,
+      explain: "「校庭《こうてい》の 桜《さくら》の 木《き》で 見《み》つけました」と あります。" },
+    { q: "先生《せんせい》は、なんの セミの ぬけがらだと 教《おし》えて くれましたか。", choices: ["アブラゼミ", "ミンミンゼミ", "クマゼミ"], answer: "アブラゼミ", evidence: 2,
+      explain: "「これは、アブラゼミの ぬけがらだよ」と 教《おし》えて くれました。" }
+  ],
+  "g2-t3": [
+    { q: "ペンギンの 食《た》べ物《もの》は、なんですか。", choices: ["魚《さかな》や オキアミ", "木《き》の 実《み》", "草《くさ》"], answer: "魚《さかな》や オキアミ", evidence: 3,
+      explain: "「食《た》べ物《もの》は、魚《さかな》や オキアミなどです」と あります。" },
+    { q: "ペンギンは、水《みず》の 中《なか》で どう できますか。", choices: ["速《はや》く 泳《およ》ぐ", "長《なが》く もぐる", "高《たか》く 跳《と》ぶ"], answer: "速《はや》く 泳《およ》ぐ", evidence: 1,
+      explain: "「水《みず》の 中《なか》を 速《はや》く 泳《およ》ぐことが できます」と あります。" }
+  ]
+};
+Object.keys(EXTRA_Q).forEach(id => {
+  const t = TEXTS.find(x => x.id === id);
+  if (t) t.questions.push(...EXTRA_Q[id]);
+});
+TEXTS.push(
+  {
+    id: "g1-t4", grade: 1, kind: "ものがたり", title: "どんぐりと りす",
+    sentences: [
+      "あきの もりで、りすの ころすけは、どんぐりを ひろいました。",
+      "ころすけは、どんぐりを きの あなに かくしました。",
+      "ふゆに なって、ゆきが ふりました。",
+      "ころすけは、きの あなから どんぐりを だして、ぽりぽり たべました。",
+      "「かくして おいて、よかった。」と、ころすけは にっこり しました。"
+    ],
+    questions: [
+      { q: "どんぐりを ひろったのは、だれですか。", choices: ["ころすけ", "くま", "たぬき"], answer: "ころすけ", evidence: 0,
+        explain: "「りすの ころすけは、どんぐりを ひろいました」と あります。" },
+      { q: "ころすけは、どんぐりを どこに かくしましたか。", choices: ["きの あな", "はこの なか", "つちの なか"], answer: "きの あな", evidence: 1,
+        explain: "「どんぐりを きの あなに かくしました」と あります。" },
+      { q: "ふゆに なって、なにが ふりましたか。", choices: ["ゆき", "あめ", "はなびら"], answer: "ゆき", evidence: 2,
+        explain: "「ふゆに なって、ゆきが ふりました」と あります。" },
+      { q: "ころすけは、ふゆに なにを たべましたか。", choices: ["どんぐり", "りんご", "さかな"], answer: "どんぐり", evidence: 3,
+        explain: "「どんぐりを だして、ぽりぽり たべました」と あります。" },
+      { q: "ころすけは、さいごに どんな かおを しましたか。", choices: ["にっこり", "ぷんぷん", "しくしく"], answer: "にっこり", evidence: 4,
+        explain: "「ころすけは にっこり しました」と あります。" },
+      { q: "ころすけが どんぐりを ひろったのは、いつですか。", choices: ["あき", "はる", "なつ"], answer: "あき", evidence: 0,
+        explain: "「あきの もりで」と あります。" }
+    ]
+  },
+  {
+    id: "g1-t5", grade: 1, kind: "せつめい", title: "てんとうむし",
+    sentences: [
+      "てんとうむしは、あかい はねを もつ むしです。",
+      "はねには、くろい てんてんが あります。",
+      "あしは、6本 あります。",
+      "はるに なると、はなや はっぱの うえで、よく みられます。",
+      "てんとうむしは、あぶらむしを たべます。"
+    ],
+    questions: [
+      { q: "てんとうむしは、どんな はねを もっていますか。", choices: ["あかい はね", "あおい はね", "しろい はね"], answer: "あかい はね", evidence: 0,
+        explain: "「あかい はねを もつ むしです」と あります。" },
+      { q: "はねには、なにが ありますか。", choices: ["くろい てんてん", "しろい てんてん", "きいろい てんてん"], answer: "くろい てんてん", evidence: 1,
+        explain: "「くろい てんてんが あります」と あります。" },
+      { q: "あしは、なん本 ありますか。", choices: ["6本", "4本", "8本"], answer: "6本", evidence: 2,
+        explain: "「あしは、6本 あります」と あります。" },
+      { q: "てんとうむしが よく みられるのは、いつですか。", choices: ["はる", "あき", "ふゆ"], answer: "はる", evidence: 3,
+        explain: "「はるに なると、よく みられます」と あります。" },
+      { q: "てんとうむしは、なにを たべますか。", choices: ["あぶらむし", "はなの みつ", "はっぱ"], answer: "あぶらむし", evidence: 4,
+        explain: "「あぶらむしを たべます」と あります。" },
+      { q: "てんとうむしは、なんの なかまですか。", choices: ["むし", "とり", "さかな"], answer: "むし", evidence: 0,
+        explain: "「あかい はねを もつ むしです」と あります。" }
+    ]
+  },
+  {
+    id: "g2-t4", grade: 2, kind: "ものがたり", title: "なくした ぼうし",
+    sentences: [
+      "たけるは、公園《こうえん》で 赤《あか》い ぼうしを なくして しまいました。",
+      "たけるは、ベンチの 下《した》や すべり台《だい》の まわりを さがしましたが、見《み》つかりませんでした。",
+      "すると、友《とも》だちの みくが、「木《き》の 枝《えだ》を 見《み》てごらん。」と 言《い》いました。",
+      "たけるが 見上《みあ》げると、ぼうしは 木《き》の 枝《えだ》に 引《ひ》っかかって いました。",
+      "風《かぜ》で 飛《と》ばされて、そこまで 行《い》ったようです。",
+      "たけるは、「見《み》つけてくれて、ありがとう。」と みくに 言《い》いました。"
+    ],
+    questions: [
+      { q: "たけるが なくしたのは、何《なに》ですか。", choices: ["赤《あか》い ぼうし", "青《あお》い ボール", "白《しろ》い てぶくろ"], answer: "赤《あか》い ぼうし", evidence: 0,
+        explain: "「赤《あか》い ぼうしを なくして しまいました」と あります。" },
+      { q: "たけるは、どこを さがしましたか。", choices: ["ベンチの 下《した》や すべり台《だい》の まわり", "教室《きょうしつ》や 廊下《ろうか》", "家《いえ》の 中《なか》"], answer: "ベンチの 下《した》や すべり台《だい》の まわり", evidence: 1,
+        explain: "「ベンチの 下《した》や すべり台《だい》の まわりを さがしました」と あります。" },
+      { q: "ぼうしが あったのは、どこですか。", choices: ["木《き》の 枝《えだ》", "ベンチの 上《うえ》", "すべり台《だい》の 下《した》"], answer: "木《き》の 枝《えだ》", evidence: 3,
+        explain: "「ぼうしは 木《き》の 枝《えだ》に 引《ひ》っかかって いました」と あります。" },
+      { q: "ぼうしは、どうして 木《き》の 枝《えだ》に あったのですか。", choices: ["風《かぜ》で 飛《と》ばされたから", "みくが 置《お》いたから", "鳥《とり》が 持《も》って 行《い》ったから"], answer: "風《かぜ》で 飛《と》ばされたから", evidence: 4,
+        explain: "「風《かぜ》で 飛《と》ばされて」と あります。" },
+      { q: "たけるは、みくに なんと 言《い》いましたか。", choices: ["ありがとう", "ごめんね", "さようなら"], answer: "ありがとう", evidence: 5,
+        explain: "「『見《み》つけてくれて、ありがとう。』と 言《い》いました」と あります。" },
+      { q: "たけるに 木《き》の 枝《えだ》を 見《み》るように 教《おし》えたのは、だれですか。", choices: ["みく", "先生《せんせい》", "お母《かあ》さん"], answer: "みく", evidence: 2,
+        explain: "みくが「木《き》の 枝《えだ》を 見《み》てごらん」と 言《い》いました。" }
+    ]
+  },
+  {
+    id: "g2-t5", grade: 2, kind: "せつめい", title: "カエル",
+    sentences: [
+      "カエルは、子《こ》どもの ときと 大人《おとな》に なってからで、すがたが 大《おお》きく 変《か》わります。",
+      "子《こ》どもの ときは オタマジャクシと 言《い》って、水《みず》の 中《なか》で 泳《およ》ぎます。",
+      "オタマジャクシには、しっぽが あって、あしは ありません。",
+      "大《おお》きく なると、あしが はえて、しっぽが 消《き》えます。",
+      "大人《おとな》の カエルは、水辺《みずべ》や 草《くさ》の 中《なか》で 虫《むし》を 食《た》べて 生《い》きています。"
+    ],
+    questions: [
+      { q: "カエルの 子《こ》どもは、なんと 言《い》いますか。", choices: ["オタマジャクシ", "コガエル", "ミズカエル"], answer: "オタマジャクシ", evidence: 1,
+        explain: "「子《こ》どもの ときは オタマジャクシと 言《い》います」と あります。" },
+      { q: "オタマジャクシは、どこで 泳《およ》ぎますか。", choices: ["水《みず》の 中《なか》", "空《そら》", "木《き》の 上《うえ》"], answer: "水《みず》の 中《なか》", evidence: 1,
+        explain: "「水《みず》の 中《なか》で 泳《およ》ぎます」と あります。" },
+      { q: "カエルは、大《おお》きく なると なにが はえますか。", choices: ["あし", "はね", "しっぽ"], answer: "あし", evidence: 3,
+        explain: "「あしが はえて、しっぽが 消《き》えます」と あります。" },
+      { q: "大人《おとな》の カエルは、なにを 食《た》べますか。", choices: ["虫《むし》", "魚《さかな》", "花《はな》"], answer: "虫《むし》", evidence: 4,
+        explain: "「虫《むし》を 食《た》べて 生《い》きています」と あります。" },
+      { q: "カエルは、子《こ》どもの ときと 大人《おとな》で、どう 変《か》わりますか。", choices: ["すがたが 大《おお》きく 変《か》わる", "色《いろ》だけ 変《か》わる", "大《おお》きさは 同《おな》じ"], answer: "すがたが 大《おお》きく 変《か》わる", evidence: 0,
+        explain: "「すがたが 大《おお》きく 変《か》わります」と あります。" },
+      { q: "オタマジャクシに あって、大《おお》きく なると 消《き》えるものは、なんですか。", choices: ["しっぽ", "あし", "目《め》"], answer: "しっぽ", evidence: 3,
+        explain: "「しっぽが 消《き》えます」と あります。" }
+    ]
+  }
+);
+
 /* ================= 状態 ================= */
 const KEY = { mistakes: "yomuTanken.mistakes.v1", stats: "yomuTanken.stats.v1", settings: "yomuTanken.settings.v1" };
 function loadJSON(k, fb) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : fb; } catch (e) { return fb; } }
@@ -386,8 +537,8 @@ function renderHome() {
     btn.className = "text-card";
     btn.innerHTML = `<span class="kind-badge ${t.kind === "せつめい" ? "setsu" : ""}">${t.kind}</span>
       <h3>${R(t.title)}</h3>
-      <div class="meta">もんだい ${t.questions.length}つ</div>
-      <div class="stars">${st.done ? "★".repeat(st.best) + "☆".repeat(t.questions.length - st.best) : ""}</div>`;
+      <div class="meta">もんだいは 4つ</div>
+      <div class="stars">${st.done ? "★".repeat(st.best) + "☆".repeat(4 - st.best) : ""}</div>`;
     btn.addEventListener("click", () => { play("decide"); openRead(t.id); });
     grid.appendChild(btn);
   });
@@ -418,7 +569,7 @@ function openRead(textId) {
 $("btn-read-back").addEventListener("click", () => { play("click"); renderHome(); show("screen-home"); });
 $("btn-to-quiz").addEventListener("click", () => {
   play("start");
-  startSession({ mode: "text", textId: currentText.id, queue: currentText.questions.map((_, i) => i) });
+  startSession({ mode: "text", textId: currentText.id, queue: shuffle(currentText.questions.map((_, i) => i)).slice(0, 4) });
 });
 
 /* ================= もんだい ================= */
@@ -438,6 +589,7 @@ function shuffle(a) { const x = a.slice(); for (let i = x.length - 1; i > 0; i--
 function renderQuestion() {
   const { t, q } = curQ();
   session.stumbled = false; session.phase = "answer";
+  $("tap-hand").classList.remove("show");
   $("quiz-passage").innerHTML = passageHTML(t, false);
   $("screen-quiz").className = "screen active " + (t.grade === 1 ? "g1" : "g2");
   $("q-count").textContent = `もんだい ${session.pos + 1} / ${session.queue.length}`;
@@ -465,7 +617,8 @@ function pickAnswer(btn, choice, q) {
     document.querySelectorAll(".choice-btn").forEach(x => { x.disabled = true; });
     session.phase = "evidence";
     $("phase-note").classList.add("show");
-    setNavi(FACE.happy, "答えは 合っているよ。つぎは 根拠さがし。答えの もとになる文を、本文から タップしてね。");
+    $("tap-hand").classList.add("show");
+    setNavi(FACE.happy, "答えは 合っているよ。つぎは、その答えが どこに書いてあるか、文をタップして さがしてね。");
     const { t } = curQ();
     $("quiz-passage").innerHTML = passageHTML(t, true);
     document.querySelectorAll("#quiz-passage .sent").forEach(el => el.addEventListener("click", () => pickEvidence(el, q)));
@@ -494,6 +647,7 @@ function pickEvidence(el, q) {
   }
 }
 function finishQuestion(q) {
+  $("tap-hand").classList.remove("show");
   const { t } = curQ();
   const key = session.textId + ":" + session.queue[session.pos];
   if (!session.stumbled) {
@@ -502,7 +656,7 @@ function finishQuestion(q) {
       mistakes = mistakes.filter(m => (m.textId + ":" + m.q) !== key);
       saveJSON(KEY.mistakes, mistakes);
     }
-    setNavi(FACE.happy, "その通り！　答えも 根拠も 合っていたよ。");
+    setNavi(FACE.happy, "その通り！　答えも、書いてある文も 合っていたよ。");
     confetti($("btn-next"));
   } else {
     if (session.mode === "text" && !mistakes.some(m => (m.textId + ":" + m.q) === key)) {
@@ -513,7 +667,7 @@ function finishQuestion(q) {
   }
   document.querySelectorAll("#quiz-passage .sent").forEach(x => { if (Number(x.dataset.idx) === q.evidence) x.classList.add("evidence-show"); });
   const eb = $("explain-box");
-  eb.innerHTML = `<span class="ev">根拠の文：</span>${R(t.sentences[q.evidence])}<br>${R(q.explain)}`;
+  eb.innerHTML = `<span class="ev">書いてある文：</span>${R(t.sentences[q.evidence])}<br>${R(q.explain)}`;
   eb.classList.add("show");
   session.phase = "done";
   const nb = $("btn-next");
@@ -536,10 +690,11 @@ function finishSession() {
     stats.totalSelf += session.selfCorrect;
     stats.totalDone += 1;
     saveJSON(KEY.stats, stats);
-    $("result-face").src = session.selfCorrect === t.questions.length ? FACE.celeb : FACE.happy;
-    $("result-stars").textContent = "★".repeat(session.selfCorrect) + "☆".repeat(t.questions.length - session.selfCorrect);
-    $("result-title").textContent = session.selfCorrect === t.questions.length ? "ぜんぶ 自力で 読めた！" : "おつかれさま！";
-    $("result-msg").innerHTML = `「${R(t.title)}」のもんだい ${t.questions.length}つのうち、答えも根拠も 自力で合っていたのは ${session.selfCorrect}つ。<br>まちがえた もんだいは「とっくん」で もう一度 たしかめられます。`;
+    const total = session.queue.length;
+    $("result-face").src = session.selfCorrect === total ? FACE.celeb : FACE.happy;
+    $("result-stars").textContent = "★".repeat(session.selfCorrect) + "☆".repeat(total - session.selfCorrect);
+    $("result-title").textContent = session.selfCorrect === total ? "ぜんぶ 自力で 読めた！" : "おつかれさま！";
+    $("result-msg").innerHTML = `「${R(t.title)}」のもんだい ${total}つのうち、答えも文も 自力で合っていたのは ${session.selfCorrect}つ。<br>まちがえた もんだいは「とっくん」で もう一度 たしかめられます。`;
     if (session.selfCorrect === t.questions.length) { play("allclear"); confetti($("result-stars")); } else play("clear");
   } else {
     $("result-face").src = FACE.celeb;
@@ -573,7 +728,7 @@ $("btn-records").addEventListener("click", () => {
   play("click");
   let rows = TEXTS.map(t => {
     const st = stats.texts[t.id] || { best: 0, done: false };
-    return `<tr><td>${t.grade}年</td><td>${R(t.title)}</td><td>${st.done ? `自力でできた： ${st.best} / ${t.questions.length}` : "まだ 読んでいない"}</td></tr>`;
+    return `<tr><td>${t.grade}年</td><td>${R(t.title)}</td><td>${st.done ? `自力でできた： ${st.best} / 4` : "まだ 読んでいない"}</td></tr>`;
   }).join("");
   $("records-body").innerHTML = `<table class="rec-table"><tr><th>学年</th><th>文</th><th>きろく</th></tr>${rows}</table>
     <p style="font-weight:700;">とっくんに 残っている もんだい： ${mistakes.length}件</p>`;
