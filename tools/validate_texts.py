@@ -17,6 +17,14 @@ for t in data:
     qs = [q.get("q") for q in t.get("questions", [])]
     if len(qs) != len(set(qs)): errors.append(f"{tid}: 問題文が重複しています（とっくん記録のキーが衝突します）")
     for i, q in enumerate(t.get("questions", [])):
+        if q.get("format") == "sort":
+            cards = q.get("cards", [])
+            ev = q.get("evidence")
+            if len(cards) < 3:
+                errors.append(f"{tid} 問題{i+1}: sort の cards は3つ以上必要です")
+            if not isinstance(ev, list) or len(ev) != len(cards) or any(not isinstance(x, int) or not (0 <= x < len(t.get("sentences", []))) for x in ev):
+                errors.append(f"{tid} 問題{i+1}: sort の evidence は cards と同じ長さの文番号リストにしてください")
+            continue
         if q.get("answer") not in q.get("choices", []):
             errors.append(f"{tid} 問題{i+1}: answer が choices にありません")
         ev = q.get("evidence")
