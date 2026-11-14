@@ -21,6 +21,7 @@
 - HTML/CSS/JavaScript の単一ファイル、データ保存は localStorage（外部API不使用）
 - 演出と音は共通基盤 edu-effects / sounds-recipe-、ナビキャラ画像は navi-character- を使用
 - 保存キー：yomuTanken.mistakes.v1 / stats.v1 / settings.v1
+- とっくんの記録は「文章ID＋問題の文」で保持します（問題を追加・並べ替えても記録がずれません。旧形式の記録は読み込み時に自動で移行します）
 
 ## 状態
 

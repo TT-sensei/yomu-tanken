@@ -102,6 +102,7 @@
   #tap-hand.show{display:block;animation:handPrompt 2.2s ease forwards;}
   @keyframes handPrompt{0%{opacity:0;transform:translate(-50%,-40%) rotate(-8deg);}18%{opacity:1;transform:translate(-50%,-58%) rotate(-8deg);}38%{transform:translate(-50%,-42%) rotate(-8deg);}58%{transform:translate(-50%,-58%) rotate(-8deg);}78%{opacity:1;transform:translate(-50%,-50%) rotate(-8deg);}100%{opacity:0;transform:translate(-50%,-50%) rotate(-8deg);}}
   .sent.tap{animation:sentPulse .7s ease-in-out 3;}
+  .sent.hint-glow{background:#fff3c4 !important;box-shadow:inset 0 0 0 3px #f0cf6e;}
   @keyframes sentPulse{0%,100%{background:#ffffff;}50%{background:#e9f7f0;}}
   @media (max-width: 900px) {
     .text-grid{grid-template-columns:1fr;}
@@ -522,7 +523,7 @@ TEXTS.push(
       "ありは、じぶんの からだより 大きな ものも はこべます。"
     ],
     questions: [
-      { q: "ありは、どんな むしですか。", choices: ["小さな むし", "大きな むし", "速い むし"], answer: "小さな むし", evidence: 0,
+      { q: "ありは、どんな むしですか。", choices: ["小さな むし", "大きな むし", "はやい むし"], answer: "小さな むし", evidence: 0,
         explain: "「ありは、小さな むしです」と あります。" },
       { q: "ありは、どう くらしていますか。", choices: ["みんなで なかよく", "ひとりぼっちで", "いつも けんかして"], answer: "みんなで なかよく", evidence: 1,
         explain: "「みんなで なかよく くらしています」と あります。" },
@@ -591,7 +592,19 @@ TEXTS.push(
 const KEY = { mistakes: "yomuTanken.mistakes.v1", stats: "yomuTanken.stats.v1", settings: "yomuTanken.settings.v1" };
 function loadJSON(k, fb) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : fb; } catch (e) { return fb; } }
 function saveJSON(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* 保存できなくても学習は続ける */ } }
-let mistakes = loadJSON(KEY.mistakes, []);            // [{textId, q}]
+let mistakes = loadJSON(KEY.mistakes, []);            // [{textId, qq}] qq=問題の文そのもの（並べ替えに強い）
+function qKey(textId, qObj) { return textId + "|" + plain(qObj.q); }
+(function migrateMistakes() {
+  const out = [];
+  for (const m of mistakes) {
+    if (!m) continue;
+    const t = TEXTS.find(x => x.id === m.textId);
+    if (!t) continue;
+    if (typeof m.qq === "string" && t.questions.some(q => plain(q.q) === m.qq)) out.push({ textId: m.textId, qq: m.qq });
+    else if (typeof m.q === "number" && t.questions[m.q]) out.push({ textId: m.textId, qq: plain(t.questions[m.q].q) });
+  }
+  if (JSON.stringify(out) !== JSON.stringify(mistakes)) { mistakes = out; saveJSON(KEY.mistakes, mistakes); }
+})();
 let stats = loadJSON(KEY.stats, { texts: {}, totalSelf: 0, totalDone: 0 });
 let settings = Object.assign({ sound: true, furigana: true }, loadJSON(KEY.settings, {}));
 let currentGrade = 1;
@@ -691,7 +704,7 @@ function shuffle(a) { const x = a.slice(); for (let i = x.length - 1; i > 0; i--
 
 function renderQuestion() {
   const { t, q } = curQ();
-  session.stumbled = false; session.phase = "answer";
+  session.stumbled = false; session.phase = "answer"; session.evMisses = 0;
   $("tap-hand").classList.remove("show");
   $("quiz-passage").innerHTML = passageHTML(t, false);
   $("screen-quiz").className = "screen active " + (t.grade === 1 ? "g1" : "g2");
@@ -744,26 +757,31 @@ function pickEvidence(el, q) {
   } else {
     play("softFail");
     session.stumbled = true;
+    session.evMisses = (session.evMisses || 0) + 1;
     el.classList.add("picked-wrong");
     el.style.pointerEvents = "none";
-    setNavi(FACE.think, "その文では ないみたい。答えの 言葉が 入っている文を さがしてみよう。");
+    if (session.evMisses >= 2) {
+      document.querySelectorAll("#quiz-passage .sent").forEach(x => { if (Number(x.dataset.idx) === q.evidence) x.classList.add("hint-glow"); });
+      setNavi(FACE.think, "ヒント：答えの 言葉が 入っている文が、うっすら 光っているよ。その文を タップしてね。");
+    } else {
+      setNavi(FACE.think, "その文では ないみたい。答えの 言葉が 入っている文を さがしてみよう。");
+    }
   }
 }
 function finishQuestion(q) {
   $("tap-hand").classList.remove("show");
   const { t } = curQ();
-  const key = session.textId + ":" + session.queue[session.pos];
+  const key = qKey(session.textId, q);
   if (!session.stumbled) {
     session.selfCorrect++;
     if (session.mode === "train") {
-      mistakes = mistakes.filter(m => (m.textId + ":" + m.q) !== key);
+      mistakes = mistakes.filter(m => (m.textId + "|" + m.qq) !== key);
       saveJSON(KEY.mistakes, mistakes);
     }
     setNavi(FACE.happy, "その通り！　答えも、書いてある文も 合っていたよ。");
-    confetti($("btn-next"));
   } else {
-    if (session.mode === "text" && !mistakes.some(m => (m.textId + ":" + m.q) === key)) {
-      mistakes.push({ textId: session.textId, q: session.queue[session.pos] });
+    if (session.mode === "text" && !mistakes.some(m => (m.textId + "|" + m.qq) === key)) {
+      mistakes.push({ textId: session.textId, qq: plain(q.q) });
       saveJSON(KEY.mistakes, mistakes);
     }
     setNavi(FACE.normal, "答えは 分かったね。この もんだいは「とっくん」に 入れたよ。あとで もう一度 たしかめよう。");
@@ -776,6 +794,7 @@ function finishQuestion(q) {
   const nb = $("btn-next");
   nb.textContent = session.pos + 1 < session.queue.length ? "つぎへ" : "けっかへ";
   nb.style.display = "inline-block";
+  if (!session.stumbled) confetti(nb);
 }
 $("btn-next").addEventListener("click", () => {
   play("decide");
@@ -798,7 +817,7 @@ function finishSession() {
     $("result-stars").textContent = "★".repeat(session.selfCorrect) + "☆".repeat(total - session.selfCorrect);
     $("result-title").textContent = session.selfCorrect === total ? "ぜんぶ 自力で 読めた！" : "おつかれさま！";
     $("result-msg").innerHTML = `「${R(t.title)}」のもんだい ${total}つのうち、答えも文も 自力で合っていたのは ${session.selfCorrect}つ。<br>まちがえた もんだいは「とっくん」で もう一度 たしかめられます。`;
-    if (session.selfCorrect === t.questions.length) { play("allclear"); confetti($("result-stars")); } else play("clear");
+    if (session.selfCorrect === total) { play("allclear"); confetti($("result-stars")); } else play("clear");
   } else {
     $("result-face").src = FACE.celeb;
     $("result-stars").textContent = "★";
@@ -815,8 +834,10 @@ $("btn-train").addEventListener("click", () => {
   if (!mistakes.length) { setTrainEmpty(); return; }
   play("practice");
   const first = mistakes[0];
-  const sameText = mistakes.filter(m => m.textId === first.textId);
-  startSession({ mode: "train", textId: first.textId, queue: sameText.map(m => m.q) });
+  const t = TEXTS.find(x => x.id === first.textId);
+  const queue = mistakes.filter(m => m.textId === first.textId)
+    .map(m => t.questions.findIndex(q => plain(q.q) === m.qq)).filter(i => i >= 0);
+  startSession({ mode: "train", textId: first.textId, queue });
 });
 function setTrainEmpty() {
   $("result-face").src = FACE.happy;
