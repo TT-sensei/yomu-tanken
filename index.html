@@ -233,6 +233,32 @@
     body.quiz-mode .choice-btn{font-size:16px;padding:7px 5px;}
     body.quiz-mode .explain-box{font-size:13px;max-height:120px;}
   }
+  /* ===== 読む画面・並べ替え画面も、画面の高さに合わせて一画面に ===== */
+  body.read-mode, body.order-mode{overflow:hidden;height:100dvh;}
+  body.read-mode header.app-head, body.order-mode header.app-head{display:none;}
+  body.read-mode main, body.order-mode main{width:100%;max-width:none;height:100dvh;margin:0;padding:8px 12px;}
+  body.read-mode #screen-read.active{height:100%;display:flex;flex-direction:column;}
+  body.read-mode #screen-read .passage-card{flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden;}
+  body.read-mode #screen-read .passage{flex:1;height:auto;min-height:0;}
+  body.read-mode #screen-read>.center{flex:none;}
+  body.read-mode #screen-read>.back-link{flex:none;align-self:flex-start;}
+  body.order-mode #screen-order>.back-btn{flex:none;align-self:flex-start;}
+  body.order-mode #screen-order.active{height:100%;display:flex;flex-direction:column;}
+  body.order-mode #screen-order .passage-card{flex:1;min-height:0;display:flex;flex-direction:column;overflow:hidden;}
+  body.order-mode .order-row{flex:1;min-height:0;align-items:stretch;}
+  body.order-mode .order-card{height:auto;}
+  @media(max-width:680px){
+    body.read-mode, body.order-mode{height:auto;overflow:auto;}
+    body.read-mode main, body.order-mode main{height:auto;}
+    body.read-mode #screen-read .passage{height:480px;flex:none;}
+    body.order-mode .order-card{height:400px;}
+  }
+
+  /* クイズ中も「やめる」を小さく残す（途中でやめられるように） */
+  body.quiz-mode #screen-quiz{display:flex;flex-direction:column;}
+  body.quiz-mode #screen-quiz>.back-link{display:inline-block;flex:none;align-self:flex-start;font-size:14px;margin:0 0 6px;padding:2px 6px;}
+  body.quiz-mode .quiz-grid{flex:1;min-height:0;height:auto;}
+
   @media(max-height:650px) and (min-width:681px){
     body.quiz-mode main{padding:5px 8px;}
     body.quiz-mode .navi-bar{min-height:44px;padding:3px 8px;}
@@ -307,7 +333,7 @@
       </div>
       <div class="quiz-side">
         <div class="navi-bar">
-          <img id="navi-face" src="https://tt-sensei.github.io/navi-character-/assets/web/characters/saku/expressions/01-normal-smile.webp" alt="さく" />
+          <img id="navi-face" src="https://tt-sensei.github.io/navi-character-/assets/web/characters/tsuki/expressions/01-normal-smile.webp" alt="つき" />
           <div class="navi-msg" id="navi-msg">文を よく読んで、答えを えらんでね。</div>
         </div>
         <div class="q-card">
@@ -331,7 +357,7 @@
     <div class="passage-card">
       <h2 class="passage-title" id="order-title"></h2>
       <div class="navi-bar" style="box-shadow:none;padding:0 0 6px;">
-        <img id="order-face" src="https://tt-sensei.github.io/navi-character-/assets/web/characters/saku/expressions/01-normal-smile.webp" alt="さく">
+        <img id="order-face" src="https://tt-sensei.github.io/navi-character-/assets/web/characters/tsuki/expressions/01-normal-smile.webp" alt="つき">
         <div class="navi-msg" id="order-msg">物語の はじめから、順番に 文を タップしてね。</div>
       </div>
       <div class="order-row" id="order-cards"></div>
@@ -341,7 +367,7 @@
   <!-- 結果 -->
   <section class="screen" id="screen-result">
     <div class="result-card">
-      <img class="result-face" id="result-face" src="https://tt-sensei.github.io/navi-character-/assets/web/characters/saku/expressions/08-celebrating.webp" alt="さく" />
+      <img class="result-face" id="result-face" src="https://tt-sensei.github.io/navi-character-/assets/web/characters/tsuki/expressions/08-celebrating.webp" alt="つき" />
       <div class="result-stars" id="result-stars">★★★★</div>
       <h2 id="result-title">おつかれさま！</h2>
       <p id="result-msg"></p>
@@ -414,13 +440,15 @@ function show(id) {
   document.querySelectorAll(".screen").forEach(s => s.classList.remove("active"));
   $(id).classList.add("active");
   document.body.classList.toggle("quiz-mode", id === "screen-quiz");
+  document.body.classList.toggle("read-mode", id === "screen-read");
+  document.body.classList.toggle("order-mode", id === "screen-order");
   window.scrollTo(0, 0);
 }
 const FACE = {
-  normal: "https://tt-sensei.github.io/navi-character-/assets/web/characters/saku/expressions/01-normal-smile.webp",
-  happy: "https://tt-sensei.github.io/navi-character-/assets/web/characters/saku/expressions/02-happy.webp",
-  think: "https://tt-sensei.github.io/navi-character-/assets/web/characters/saku/expressions/03-thinking.webp",
-  celeb: "https://tt-sensei.github.io/navi-character-/assets/web/characters/saku/expressions/08-celebrating.webp"
+  normal: "https://tt-sensei.github.io/navi-character-/assets/web/characters/tsuki/expressions/01-normal-smile.webp",
+  happy: "https://tt-sensei.github.io/navi-character-/assets/web/characters/tsuki/expressions/02-happy.webp",
+  think: "https://tt-sensei.github.io/navi-character-/assets/web/characters/tsuki/expressions/03-thinking.webp",
+  celeb: "https://tt-sensei.github.io/navi-character-/assets/web/characters/tsuki/expressions/08-celebrating.webp"
 };
 function setNavi(face, msg) { $("navi-face").src = face; $("navi-msg").textContent = msg; }
 
